@@ -1,0 +1,25 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        // Configure the Maven repository address for the HMS Core SDK.
+        maven {url 'https://developer.huawei.com/repo/'}
+    }
+    dependencies {
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        // Configure the Maven repository address for the HMS Core SDK.
+        maven {url 'https://developer.huawei.com/repo/'}
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
