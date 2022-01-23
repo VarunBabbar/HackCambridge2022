@@ -1,72 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:layout_gravity="center_horizontal"
+    android:background="?attr/colorPrimary"
+    android:fitsSystemWindows="true"
+    android:onClick="embed"
     android:orientation="vertical"
-    tools:context=".MainActivity"
-    android:background="?attr/colorPrimary">
+    tools:context=".MainActivity">
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:id="@+id/imageView"/>
+        android:layout_weight="1" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_bottom"
         android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
         android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentBottom="true"
         android:background="?attr/colorPrimaryVariant">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
             android:layout_gravity="center"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
+
             <Space
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"/>
+                android:layout_weight="1" />
+
             <ImageButton
+                android:id="@+id/data"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
                 android:background="@drawable/ic_baseline_data_usage_24"
-                android:id="@+id/data"
-                android:onClick="data"/>
+                android:onClick="data" />
+
             <Space
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"/>
+                android:layout_weight="1" />
+
             <ImageButton
+                android:id="@+id/camera"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
                 android:background="@drawable/ic_baseline_photo_camera_24"
-                android:id="@+id/camera"
-                android:onClick="camera"/>
+                android:onClick="camera" />
+
             <Space
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"/>
+                android:layout_weight="1" />
+
             <ImageButton
+                android:id="@+id/analytics"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
                 android:background="@drawable/ic_baseline_analytics_24"
-                android:id="@+id/analytics"
-                android:onClick="analytics"/>
+                android:onClick="embed" />
+
             <Space
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"/>
+                android:layout_weight="1" />
         </LinearLayout>
 
     </androidx.appcompat.widget.Toolbar>

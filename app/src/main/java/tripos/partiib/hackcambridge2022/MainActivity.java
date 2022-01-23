@@ -1,5 +1,6 @@
 package tripos.partiib.hackcambridge2022;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +27,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.SetOptions;
 import com.huawei.hmf.tasks.OnFailureListener;
 import com.huawei.hmf.tasks.OnSuccessListener;
 import com.huawei.hmf.tasks.Task;
@@ -36,6 +43,9 @@ import com.huawei.hms.mlsdk.text.MLLocalTextSetting;
 import com.huawei.hms.mlsdk.text.MLRemoteTextSetting;
 import com.huawei.hms.mlsdk.text.MLText;
 import com.huawei.hms.mlsdk.text.MLTextAnalyzer;
+import com.huawei.hms.mlsdk.textembedding.MLTextEmbeddingAnalyzer;
+import com.huawei.hms.mlsdk.textembedding.MLTextEmbeddingAnalyzerFactory;
+import com.huawei.hms.mlsdk.textembedding.MLTextEmbeddingSetting;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -44,7 +54,11 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
     String currentPhotoPath;
@@ -57,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
     Button setImage, analyseImage;
     ImageView imageView;
     private Toolbar toolbar;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -88,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
                 || (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)){
             requestPermissions();
         }
+
+        getReceiptWords();
 
 
     }
@@ -250,11 +267,79 @@ public class MainActivity extends AppCompatActivity {
         this.sendBroadcast(mediaScanIntent);
     }
 
+    private void getEmbeddings(Set<String> stringSet) {
+        MLTextEmbeddingSetting setting = new MLTextEmbeddingSetting.Factory()
+                // Set languages that can be recognized. Currently, English (MLTextEmbeddingSetting.LANGUAGE_EN) and Simplified Chinese (MLTextEmbeddingSetting.LANGUAGE_ZH) are supported.
+                .setLanguage(MLTextEmbeddingSetting.LANGUAGE_EN)
+                .create();
+        MLTextEmbeddingAnalyzer analyzer = MLTextEmbeddingAnalyzerFactory.getInstance().getMLTextEmbeddingAnalyzer(setting);
+        Task<Map<String, Float[]>> wordVectorBatchTask = analyzer.analyseWordVectorBatch(stringSet);
+        HashMap<String, ArrayList<Float>> vectors = new HashMap<String, ArrayList<Float>>();
+        wordVectorBatchTask.addOnSuccessListener(new OnSuccessListener<Map<String, Float[]>>() {
+            @Override
+            public void onSuccess(Map<String, Float[]> wordsVector) {
+                // Recognition success processing (Map is HashMap, key is the word to be queried, and value is the corresponding vector result.)
+
+                for (String word :  stringSet) {
+                    Float vec[] = wordsVector.get(word);
+                    int i = 0;
+                    ArrayList<Float> vecList = new ArrayList<>();
+                    for (Float f : vec) {
+                        vecList.add(i, f);
+                    }
+                    if(vec.length != 0) {
+                        vectors.put(word, vecList);
+                        Log.d(word, vec.toString());
+                    }
+
+                }
+                Map<String, Object> embeddingsMap  = new HashMap<>();
+                embeddingsMap.put("embeddings", vectors);
+                db.collection("embeddings").document("word_embeddings")
+                        .set(embeddingsMap);
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception e) {
+                // If the recognition fails, handle the exception by referring to step 10 below.
+            }
+        });
+    }
+
     public void camera(View view) {
         onCameraClick();
     }
 
     public void data(View view) {
         testAnalyse();
+    }
+
+    public void embed(View view) {
+        Intent intent = new Intent(this, AnalyticsActivity.class);
+        startActivity(intent);
+    }
+
+    public void getReceiptWords() {
+        final DocumentReference docRef = db.collection("processed_receipts").document("receipt_keywords");
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w("hi", "Listen failed.", e);
+                    return;
+                }
+
+                if (snapshot != null && snapshot.exists()) {
+                    List<String> words = (List<String>) snapshot.getData().get("0");
+                    Set<String> stringSet = new HashSet<>(words);
+                    getEmbeddings(stringSet);
+
+                } else {
+                    Log.d("hi", "Current data: null");
+                }
+            }
+        });
     }
 }

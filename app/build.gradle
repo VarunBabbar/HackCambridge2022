@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     // Add the following configuration:
     id 'com.huawei.agconnect'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -27,6 +28,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -37,6 +41,9 @@ dependencies {
     implementation 'com.huawei.hms:ml-computer-vision-ocr:3.3.0.301'
     implementation 'com.huawei.hms:ml-computer-vision-ocr-cn-model:3.3.0.301'
     implementation 'com.huawei.agconnect:agconnect-core:1.5.2.300'
+    implementation 'androidx.navigation:navigation-fragment:2.3.5'
+    implementation 'androidx.navigation:navigation-ui:2.3.5'
+    implementation 'com.google.firebase:firebase-firestore:21.4.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
@@ -79,7 +86,7 @@ dependencies {
     implementation 'com.huawei.hms:ml-computer-vision-ocr-jk-model:2.0.5.300'
     implementation 'com.huawei.hms:ml-computer-vision-classification:2.0.1.300'
     implementation 'com.huawei.hms:ml-computer-vision-image-classification-model:2.0.1.300'
-    implementation 'com.huawei.hms:ml-nlp-textembedding:2.0.4.300'
+    implementation 'com.huawei.hms:ml-nlp-textembedding:3.3.0.300'
     implementation 'com.huawei.hms:ml-computer-vision-skeleton:2.0.4.300'
     implementation 'com.huawei.hms:ml-computer-vision-skeleton-model:2.0.4.300'
     implementation 'com.huawei.hms:ml-computer-vision-yoga-model:2.0.4.300'

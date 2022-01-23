@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "959653782783",
+    "firebase_url": "https://hackcambridge202-default-rtdb.firebaseio.com",
+    "project_id": "hackcambridge202",
+    "storage_bucket": "hackcambridge202.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:959653782783:android:985885a8a609996aa118ca",
+        "android_client_info": {
+          "package_name": "tripos.partiib.hackcambridge2022"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "959653782783-ql0j409tv43fg87fjlmg9d1iqgh6u6up.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tripos.partiib.hackcambridge2022",
+            "certificate_hash": "5ee629672a42bfc03a65f730ce838c66c81d5253"
+          }
+        },
+        {
+          "client_id": "959653782783-lf36dfdaddgg061r4j6ktvjtpvo704k6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxAKFjUX9PcknzyRk73Ii69g-lvyPKlJ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "959653782783-lf36dfdaddgg061r4j6ktvjtpvo704k6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
