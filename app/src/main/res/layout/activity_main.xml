@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    android:background="?attr/colorPrimary">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/imageView"/>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_bottom"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimaryVariant">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center">
+            <Space
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"/>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
+                android:background="@drawable/ic_baseline_data_usage_24"
+                android:id="@+id/data"
+                android:onClick="data"/>
+            <Space
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"/>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
+                android:background="@drawable/ic_baseline_photo_camera_24"
+                android:id="@+id/camera"
+                android:onClick="camera"/>
+            <Space
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"/>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
+                android:background="@drawable/ic_baseline_analytics_24"
+                android:id="@+id/analytics"
+                android:onClick="analytics"/>
+            <Space
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"/>
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+</LinearLayout>

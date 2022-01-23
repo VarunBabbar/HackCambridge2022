@@ -1,0 +1,11 @@
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+        maven {url 'https://developer.huawei.com/repo/'}
+    }
+}
+rootProject.name = "HackCambridge2022"
+include ':app'
